@@ -409,6 +409,16 @@
     font-size:14px;
     margin:0 0 16px;
   }
+  .win-banner .big-num{
+    display:inline-block;
+    font-family:'Noto Sans KR', sans-serif;
+    font-weight:900;
+    font-size:44px;
+    line-height:1;
+    color:var(--gold-deep);
+    margin:0 4px;
+    vertical-align:-6px;
+  }
   .reset-btn{
     font-family:'Noto Sans KR', sans-serif; font-weight:700;
     background:transparent;
@@ -1176,11 +1186,11 @@ function showWin(){
   banner.classList.add('show');
   const total = g.HIDDEN.length;
   const perfect = (s.firstTryScore === total);
-  let summary = `총 ${s.attemptCount}번 시도해서 완성했어요.`;
+  let summary = `총 <span class="big-num">${s.attemptCount}</span>번 시도해서 완성했어요.`;
   summary += perfect
     ? ` ${total}개 전부 한 번에 맞혔어요! 완벽해요 🏆`
     : ` 한 번에 맞춘 자리는 ${total}개 중 ${s.firstTryScore}개예요.`;
-  document.getElementById('winSummary').textContent = summary;
+  document.getElementById('winSummary').innerHTML = summary;
 }
 
 document.getElementById('resetBtn').addEventListener('click', () => {
