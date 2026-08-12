@@ -929,20 +929,45 @@ function playCorrectSound(){
     if(!ctx) return;
     if(ctx.state === 'suspended') ctx.resume();
     const now = ctx.currentTime;
-    const notes = [880, 1174.66]; // A5 -> D6, 경쾌한 정답 차임
-    notes.forEach((freq, i) => {
+    // 도-미-솔 "딩동댕~" (마지막 음은 길게 여운)
+    const notes = [
+      { freq: 523.25, dur: 0.28 },  // C5 딩
+      { freq: 659.25, dur: 0.28 },  // E5 동
+      { freq: 783.99, dur: 0.9 },   // G5 댕~
+    ];
+    notes.forEach((n, i) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.value = freq;
-      const t0 = now + i*0.11;
+      osc.frequency.value = n.freq;
+      const t0 = now + i*0.16;
       gain.gain.setValueAtTime(0.0001, t0);
-      gain.gain.exponentialRampToValueAtTime(0.22, t0 + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.3);
+      gain.gain.exponentialRampToValueAtTime(0.25, t0 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + n.dur);
       osc.connect(gain).connect(ctx.destination);
       osc.start(t0);
-      osc.stop(t0 + 0.32);
+      osc.stop(t0 + n.dur + 0.02);
     });
+  }catch(e){ /* 오디오 사용 불가 시 무시 */ }
+}
+function playWrongSound(){
+  try{
+    const ctx = getAudioCtx();
+    if(!ctx) return;
+    if(ctx.state === 'suspended') ctx.resume();
+    const now = ctx.currentTime;
+    // 낮은 버저 "삡"
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.value = 165;
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.18, now + 0.01);
+    gain.gain.setValueAtTime(0.18, now + 0.22);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.32);
   }catch(e){ /* 오디오 사용 불가 시 무시 */ }
 }
 
@@ -1138,6 +1163,7 @@ function handleGuess(item, btnEl){
     btnEl.appendChild(mark);
     btnEl.classList.add('marked-wrong');
     btnEl.classList.add('wrong');
+    playWrongSound();
     document.getElementById('feedback').textContent = '앗, 틀렸어요. 다시 골라보세요!';
     setTimeout(() => btnEl.classList.remove('wrong'), 400);
   }
