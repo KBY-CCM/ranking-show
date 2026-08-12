@@ -55,7 +55,7 @@
   h1{
     font-family:'Noto Sans KR', sans-serif; font-weight:900;
     font-size:clamp(26px,4.5vw,40px);
-    margin:0 0 10px;
+    margin:16px 0 0;
   }
   header.top p{
     color:var(--cream-dim);
@@ -70,7 +70,7 @@
     display:flex;
     justify-content:center;
     gap:10px;
-    margin:22px 0 26px;
+    margin:0 0 24px;
     flex-wrap:wrap;
   }
   .tab-btn{
@@ -442,16 +442,16 @@
 </head>
 <body>
 <div class="app">
+  <div class="tab-bar" id="tabBar"></div>
+
   <header class="top">
     <div class="eyebrow">
       <svg class="paw" viewBox="0 0 64 64"><ellipse cx="32" cy="40" rx="16" ry="13"/><ellipse cx="12" cy="20" rx="7" ry="9"/><ellipse cx="52" cy="20" rx="7" ry="9"/><ellipse cx="22" cy="10" rx="6" ry="8"/><ellipse cx="42" cy="10" rx="6" ry="8"/></svg>
       랭킹 맞추기 쇼
     </div>
-    <h1 id="pageTitle">가장 흔한 강아지 이름</h1>
     <p id="pageSubtitle"></p>
+    <h1 id="pageTitle">가장 흔한 강아지 이름</h1>
   </header>
-
-  <div class="tab-bar" id="tabBar"></div>
 
   <div class="layout">
     <!-- SIDEBAR -->
@@ -531,12 +531,12 @@ const GAMES = {
     ],
   },
   conveni: {
-    label: "편의점 물건",
+    label: "편의점 가공식품",
     icon: "🏪",
-    title: "편의점에서 자주 사는 물건",
+    title: "편의점에서 자주 사는 가공식품",
     subtitle: "11위부터 15위는 이미 공개되어 있어요.<br>10위부터 1위까지 순서대로 하나씩, 후보 중에서 정답을 골라보세요.<br>틀리면 같은 자리에서 바로 다시 도전할 수 있어요.",
     sidebarTitle: "🏆 랭킹 맞혀 보기",
-    source: "엠브레인 구매딥데이터",
+    source: "엠브레인 구매딥데이터 — 편의점 인기 품목 TOP15 (트렌드모니터, 2026.5)",
     hiddenStart: 1,
     knownStart: 11,
     hiddenRaw: [
